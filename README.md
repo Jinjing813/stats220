@@ -13,3 +13,15 @@ A little about me:
 A meme that captures how I currently feel about my university studies is
 
 ![](https://wx2.sinaimg.cn/large/a007f1e0ly1hwelj3gjs9g204q04q3z1.gif)
+
+
+
+This is my repo for STATS 220. 
+
+A little about me:
+
+- I am undertaking a degree in ....
+- I am taking STATS 220 because ....
+- I am interested in learning about ....
+
+A meme that captures how I currently feel about my university studies is ![](https://c.tenor.com/8druEACXtX8AAAAd/tenor.gif)
