@@ -1,12 +1,18 @@
-# stats220
+## stats220
 
-This is my repo for STATS 220. 
+# This is my repo for STATS 220. 
 
 A little about me:
 
-- I am a Stage II student majoring in Computer Science and Statistics.
-- I am taking STATS 220 to learn how to better use data technologies and programming languages for data processing, while also deepening my understanding of statistics and data.
-- I hope everything goes well in this course!
+1.I am a Stage II student majoring in Computer Science and Statistics.
+2.I am taking STATS 220 to learn how to better use data technologies and programming languages for data processing, while also deepening my understanding of statistics and data.
+3.I hope everything goes well in this course!
+
+My course this year:
+- STATS220
+- STATS208
+- CS230
+- CS120
 
 A meme that captures how I currently feel about my university studies is
 
