@@ -9,7 +9,7 @@ A little about me:
 3. I hope everything goes well in this course!
 4. I like watching ASMR and this is my favorite youtuber [nara](https://www.youtube.com/@nara.asmr.).
 
-*My course this year:*
+*My course this semester:*
 - **STATS220**
 - STATS208
 - CS230
