@@ -7,6 +7,7 @@ A little about me:
 1. I am a Stage II student majoring in Computer Science and Statistics.
 2. I am taking STATS 220 to learn how to better use data technologies and programming languages for data processing, while also deepening my understanding of statistics and data.
 3. I hope everything goes well in this course!
+4. I like watching ASMR and this is my favorite youtuber [nara](https://www.youtube.com/@nara.asmr.)
 
 *My course this year:*
 - **STATS220**
