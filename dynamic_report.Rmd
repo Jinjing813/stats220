@@ -1,0 +1,127 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+library(readr)
+library(dplyr)
+library(ggplot2)
+```
+
+```{css}
+body {
+  background-color: #FFFFFF;
+}
+p {
+  font-family: "Arial";
+  color: #000000;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+h2 {
+  color: #414C7C;
+  font-weight: bold;
+  font-size: 30px
+}
+
+h3 {
+  color: #414C7C;
+  font-weight: bold;
+  font-size: 24px
+}
+
+```
+
+## Students Shopping Habits for Daily Necessities
+
+This analysis explores the shopping habits of students for daily necessities, including their shopping frequency, preferred shopping methods, and factors influencing their choices. The data was collected via an online survey.
+
+```{r}
+#Read data directly from the URL of the published CSV file into a data frame called logged_data
+csv_file <-"https://docs.google.com/spreadsheets/d/e/2PACX-1vTgKXM8-pMzTxTZcv4w5E9vnERlE8-cwIKE-nKOMwwTTj_cC9a92n0MhwR1Y3V7Bt-3FY9yddFN6b3L/pub?gid=868269455&single=true&output=csv"
+logged_data <- read_csv(csv_file) 
+
+#Rename the variables of the data frame logged_data using the rename() function, as part of creating a new data frame named latest_data
+latest_data <- logged_data %>%
+  rename(
+    living_arrangement = "What is your current living situation?",
+    shop_method = "How do you usually purchase daily necessities?",
+    shopping_visits = "On average, how many times per month do you visit a physical store for daily necessities? （Enter a number between 0 and 30)",
+    shopping_time = "How much time do you typically spend per week shopping for daily necessities (include online shopping)?",
+    shopping_factor = "What is the most important factor influencing your shopping decisions on where you shop?"
+    )
+
+#Due to lengthy original category labels, I changed the label names
+latest_data <- latest_data %>%
+  mutate(shop_method_short = case_when(
+    shop_method == "Large chain supermarkets (e.g., Countdown, New World)" ~ "Supermarkets",
+    shop_method == "Convenience stores/small local stores" ~ "Convenience stores",
+    shop_method == "Online shopping" ~ "Online",
+    shop_method == "I rarely buy these items (e.g., others provides these items for me)" ~ "Rarely buy",
+    TRUE ~ shop_method
+  ))
+
+latest_data <- latest_data %>%
+  mutate(living_arrangement_short = case_when(
+    living_arrangement == "I live alone" ~ "Alone",
+    living_arrangement == "I live with my family" ~ "With family",
+    living_arrangement == "I live in shared accommodation (e.g., dormitory, shared apartment)" ~ "Shared",
+    TRUE ~ living_arrangement
+  ))
+
+#Final R code for my report
+#Identify summary values (min, max, mean value of shopping visits) 
+summary_stats <- latest_data %>%
+  summarise(
+    min_visits = min(shopping_visits, na.rm = TRUE),
+    max_visits = max(shopping_visits, na.rm = TRUE),
+    mean_visits = mean(shopping_visits, na.rm = TRUE),
+    n = n()
+  )
+
+#Generate the first bar chart of shopping method
+method_chart <- latest_data %>%
+  ggplot() +
+  geom_bar(aes(x = shop_method_short), fill = "#97CAEC") +
+  labs(title = "Shopping Methods Distribution",
+       x = "Shopping Method",
+       y = "Count")
+
+#Generate the second bar chart of shopping visits and living arrangement
+living_chart <-latest_data %>%
+  ggplot() +
+  geom_bar(aes(x = shopping_visits, fill = living_arrangement_short)) +
+  labs(title = "Living Situation Affect Shopping Frequency?",
+       subtitle = "Comparing monthly store visits across different living arrangements",
+       caption = "Source: Survey",
+       x = "Monthly Shopping Visits (times)",
+       y = "Number of Respondents") +
+  scale_fill_manual(values=c("#99C7AA", "#E1A5A5", "#9D99C7"))
+
+```
+### Shopping Visits Statistics
+
+The minimum number of shopping visits per month is `r summary_stats$min_visits`.  
+The maximum number of shopping visits per month is `r summary_stats$max_visits`.  
+The average number of shopping visits per month is `r summary_stats$mean_visits`.  
+
+### Shopping Methods Distribution  
+
+This chart below shows the distribution of different shopping methods among respondents. The majority of participants prefer **supermarkets**, while a smaller proportion opts for **convenience stores, online shopping**, only a few respondents **rarely buy daily necessities**. This may be because large chain supermarkets have a wide range of products, are cheaper than convenience stores, and are faster than online shopping. It helps us understand the primary shopping methods consumers rely on.
+
+```{r}
+#Generate the first bar chart of shopping method
+method_chart
+```
+
+### Impact of Living Situation on Shopping Frequency
+
+This chart explores the relationship between **living arrangement** and **monthly shopping visits**. It shows that different living arrangements tend to have different shopping frequencies. It can be roughly seen from that respondents who **live with their families** go to the supermarket significantly less frequently. This may be because different living arrangements bring different needs. People who live **alone** or in **shared accommodation** need to go to the supermarket to buy daily necessities by themselves, while people who live with their families may have these items provided by their families. It helps us analyze how different living arrangements bring different needs and lead to different shopping habits.
+  
+```{r}
+#Generate the first bar chart of shopping method
+living_chart
+```
